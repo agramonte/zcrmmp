@@ -12,7 +12,7 @@ local buttonTouched = false
 local whatAmI = system.getInfo( "deviceID" )
 
 --- 1. Add the file.
-local multiplayer = require("zeroconfrobmiraclemp")
+local multiplayer = require("zeroconf_mp")
 
 
 local function onButtonTouched(event)

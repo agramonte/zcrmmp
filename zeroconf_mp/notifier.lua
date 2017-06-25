@@ -9,7 +9,7 @@ N.notifyOfDataRecieved = function(message)
     local messageTable = json.decode(message)
     
     local eventData = {}
-    eventData.name = "zeroconfrobmiraclemp"
+    eventData.name = "zeroconf_mp"
     eventData.phase = "dataRecieved"
     eventData.isError = "false"
     eventData.data = messageTable
@@ -19,7 +19,7 @@ end
 
 N.notifyOfPlayerAdded = function(players)
     local eventData = {}
-    eventData.name = "zeroconfrobmiraclemp"
+    eventData.name = "zeroconf_mp"
     eventData.phase = "playerAdded"
     eventData.isError = "false"
     eventData.data = players
@@ -29,7 +29,7 @@ end
 
 N.notifyOfClientConnected = function()
     local eventData = {}
-    eventData.name = "zeroconfrobmiraclemp"
+    eventData.name = "zeroconf_mp"
     eventData.phase = "connected"
     eventData.isError = "false"
     eventData.data = ""

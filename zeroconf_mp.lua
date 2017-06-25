@@ -28,10 +28,10 @@ zcrmmp.amServer = false -- to know if I cam client or server.
 
 --References
 zcrmmp.zeroconf = require( "plugin.zeroconf" ) -- zeroconf plugin.
-zcrmmp.server = require( "zeroconfrobmiraclemp.server") -- rob miracle original server (with changes).
-zcrmmp.client = require( "zeroconfrobmiraclemp.client") -- rob miracle original client (with changes).
-zcrmmp.notifier = require( "zeroconfrobmiraclemp.notifier") -- notification lib.
-zcrmmp.buffer = require( "zeroconfrobmiraclemp.dataBuffer") -- copy and send buffer.
+zcrmmp.server = require( "zeroconf_mp.server") -- rob miracle original server (with changes).
+zcrmmp.client = require( "zeroconf_mp.client") -- rob miracle original client (with changes).
+zcrmmp.notifier = require( "zeroconf_mp.notifier") -- notification lib.
+zcrmmp.buffer = require( "zeroconf_mp.dataBuffer") -- copy and send buffer.
 
 
 zcrmmp.zeroconfListener = function(event)
@@ -74,8 +74,8 @@ end
 
 zcrmmp.init = function(eventListener, optionsTable)
 
-    zcrmmp.notifier.eventDispatcher:addEventListener( "zeroconfrobmiraclemp", eventListener)
-    zcrmmp.notifier.eventDispatcher:addEventListener( "zeroconfrobmiraclemp", zcrmmp.onEvent )
+    zcrmmp.notifier.eventDispatcher:addEventListener( "zeroconf_mp", eventListener)
+    zcrmmp.notifier.eventDispatcher:addEventListener( "zeroconf_mp", zcrmmp.onEvent )
     zcrmmp.zeroconf.init( zcrmmp.zeroconfListener )
 
     -- Values from option table.
