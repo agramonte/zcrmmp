@@ -37,4 +37,14 @@ N.notifyOfClientConnected = function()
     N.eventDispatcher:dispatchEvent( eventData )
 end
 
+N.notifyOfServerStart = function()
+    local eventData = {}
+    eventData.name = "zeroconf_mp"
+    eventData.phase = "serverStarted"
+    eventData.isError = "false"
+    eventData.data = ""
+
+    N.eventDispatcher:dispatchEvent( eventData )
+end
+
 return N

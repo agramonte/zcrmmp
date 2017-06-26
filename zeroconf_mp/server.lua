@@ -23,6 +23,8 @@ S.createServer = function(notifie, buffer)
     notifierLib = notifie -- Assign the notifier the one that came in.
     bufferLib = buffer
 
+    notifierLib.notifyOfServerStart()
+
     tcp, err = socket.bind( S.getIP(), 0 ) -- Let it bind to any port.
 
     serverIp, S.port = tcp:getsockname()
