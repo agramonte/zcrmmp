@@ -30,10 +30,9 @@ multiplayer.startGame()
 
 6. To end the game:
 
-``
-
+```
 multiplayer.endGame() 
-``
+```
 
 7. To send data:
 
