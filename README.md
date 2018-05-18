@@ -31,30 +31,35 @@ multiplayer.startGame()
 6. To end the game:
 
 ``
+
 multiplayer.endGame() 
 ``
 
 7. To send data:
 
-'''
+```
+
 multiplayer.sendData(testData) -- Table of data to send.
-'''
+```
 
 8. Listening to events.
 
 When the client or server recieves data from another client.
+
 eventData.name = "zeroconf_mp"
 eventData.phase = "dataRecieved"
 eventData.isError = "false"
 eventData.data = <table with the data recieved>
 
 When a client connects to the server. Server only event.
+
 eventData.name = "zeroconf_mp"
 eventData.phase = "playerAdded"
 eventData.isError = "false"
 eventData.data = <table of players>
 
 When a client connects to the server. Client only event.
+
 eventData.name = "zeroconf_mp"
 eventData.phase = "connected"
 eventData.isError = "false"
