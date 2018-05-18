@@ -23,14 +23,17 @@ properties -- Table just created above with the options.
 )
 ```
 5. To start the game:
+
 ```
 multiplayer.startGame()
 ```
 6. To end the game:
+
 ``
 multiplayer.endGame() 
 ``
 7. To send data:
+
 '''
 multiplayer.sendData(testData) -- Table of data to send.
 '''
