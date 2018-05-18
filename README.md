@@ -27,16 +27,19 @@ properties -- Table just created above with the options.
 ```
 multiplayer.startGame()
 ```
+
 6. To end the game:
 
 ``
 multiplayer.endGame() 
 ``
+
 7. To send data:
 
 '''
 multiplayer.sendData(testData) -- Table of data to send.
 '''
+
 8. Listening to events.
 
 When the client or server recieves data from another client.
