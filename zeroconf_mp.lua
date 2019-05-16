@@ -53,9 +53,7 @@ zcrmmp.onEvent = function( event )
         local numberOfPlayers = tableLength(event.data)
 
         if numberOfPlayers == (zcrmmp.numberOfPlayers - 1 ) then -- If we have our number of players.
-
             zcrmmp.server.stopAccepts() -- Stop accepting new clients.
-            
             zcrmmp.zeroconf.unpublishAll() -- Stop server publish. 
         end
      end
@@ -63,9 +61,9 @@ end
 
 zcrmmp.onSearchTimerOver = function(event)
     if zcrmmp.serverFound == false then --Found nothing. Start a server.
-
+        zcrmmp.amServer = true
         zcrmmp.zeroconf.stopBrowseAll() -- Stop the browswer.
-
+       
         zcrmmp.serverInfo = zcrmmp.server.createServer(zcrmmp.notifier, zcrmmp.buffer) -- Create the server.
 
         zcrmmp.zeroconf.publish( {port = zcrmmp.server.port * 1, type="_corona._tcp", name=zcrmmp.serverName} ) -- Publish server.
@@ -73,7 +71,7 @@ zcrmmp.onSearchTimerOver = function(event)
 end
 
 zcrmmp.init = function(eventListener, optionsTable)
-
+   
     zcrmmp.notifier.eventDispatcher:addEventListener( "zeroconf_mp", eventListener)
     zcrmmp.notifier.eventDispatcher:addEventListener( "zeroconf_mp", zcrmmp.onEvent )
     zcrmmp.zeroconf.init( zcrmmp.zeroconfListener )
@@ -88,12 +86,16 @@ end
 
 zcrmmp.startGame = function()
     -- Check for servers with zeroconf
+    zcrmmp.amServer = false
+    zcrmmp.serverFound = false
     zcrmmp.zeroconf.browse( {type="_corona._tcp"} )
 
+    
     -- Create a timer to stop searching for server.
     if zcrmmp.searchForLength > 0 then
         zcrmmp.searchTimer = timer.performWithDelay(zcrmmp.searchForLength, zcrmmp.onSearchTimerOver)
     end
+
 end
 
 zcrmmp.endGame = function()

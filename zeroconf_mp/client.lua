@@ -3,6 +3,7 @@ local socket = require( "socket" )
 local clientPulse
 local notifierLib
 local bufferLib
+local _sock
 
 local C = {}
 C.connectToServer = function( ip, port )
@@ -17,6 +18,7 @@ C.connectToServer = function( ip, port )
 end
 
 C.createClientLoop = function( sock, ip, port, notifie, dataLib)
+    _sock = sock
     notifierLib = notifie
     bufferLib = dataLib
     notifierLib.notifyOfClientConnected()
@@ -27,15 +29,23 @@ C.createClientLoop = function( sock, ip, port, notifie, dataLib)
         local buffer = bufferLib.fetchNextToGo()
  
         repeat
-            data, err = sock:receive()
-            if data then
-                allData[#allData+1] = data
-            end
-            if ( err == "closed" and clientPulse ) then  --try again if connection closed
-                C.connectToServer( ip, port )
-                data, err = sock:receive()
+            if _sock then
+                data, err = _sock:receive()
+            
+            
                 if data then
                     allData[#allData+1] = data
+                end
+
+                if ( err == "closed" and clientPulse ) then  --try again if connection closed
+                    _sock = C.connectToServer( ip, port )
+
+                    if _sock then
+                        data, err = _sock:receive()
+                        if data then
+                            allData[#allData+1] = data
+                        end
+                    end
                 end
             end
         until not data
@@ -49,11 +59,16 @@ C.createClientLoop = function( sock, ip, port, notifie, dataLib)
         
         for i, msg in pairs( buffer ) do
             
-            local data, err = sock:send(msg)
+            if _sock then
+                local data, err = _sock:send(msg)
             
-            if ( err == "closed" and clientPulse ) then  --try to reconnect and resend
-                C.connectToServer( ip, port )
-                data, err = sock:send( msg )
+            
+                if ( err == "closed" and clientPulse ) then  --try to reconnect and resend
+                    _sock = C.connectToServer( ip, port )
+                    if _sock then
+                        data, err = _sock:send( msg )
+                    end
+                end
             end
         end
     end
@@ -64,9 +79,11 @@ C.createClientLoop = function( sock, ip, port, notifie, dataLib)
 end
 
 C.stopClient = function()
-        timer.cancel( clientPulse )  --cancel timer
-        clientPulse = nil
-        sock:close()
+        if clientPulse ~= nil then
+            timer.cancel( clientPulse )  --cancel timer
+            clientPulse = nil
+        end
+
 end
 
 return C

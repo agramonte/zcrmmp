@@ -1,6 +1,6 @@
 
 local socket = require( "socket" )
-local clientList = {}
+local clientList = nil
 local tcp, err
 local serverIp
 local serverPulse
@@ -20,6 +20,10 @@ end
 
 S.createServer = function(notifie, buffer)
 
+    if clientList == nil then
+        clientList = {}
+    end
+    
     notifierLib = notifie -- Assign the notifier the one that came in.
     bufferLib = buffer
 
@@ -105,11 +109,21 @@ S.stopAccepts = function()
 end
 
 S.stopServer = function()
-    timer.cancel( serverPulse )  --cancel timer
-    tcp:close()
-    for i, v in pairs( clientList ) do
-        v:close()
+    if serverPulse ~= nil then
+        timer.cancel( serverPulse )  --cancel timer
     end
+
+    tcp:close()
+    if clientList ~= nil then
+        for i, v in pairs( clientList ) do
+            if v ~= nil then
+                v = v:close()
+            end
+        end
+
+        clientList = nil
+    end
+    
 end
 
 return S
