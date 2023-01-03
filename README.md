@@ -3,7 +3,7 @@ Note:
 This project and these files are not endorsed or sponsored in anyway by Corona Labs. There is 0 support implied or given by me or anybody at Corona if you use these files in your projects.
 
 Instructions:
-1. Activate zero-conf: https://marketplace.coronalabs.com/plugin/zeroconf
+1. Add this plugin: https://github.com/coronalabs/com.coronalabs-plugin.zeroconf
 2. Copy the folder "zeroconf_mp" and file "zeroconf_mp.lua" to your local project.
 3. Reference the file:
 ```
